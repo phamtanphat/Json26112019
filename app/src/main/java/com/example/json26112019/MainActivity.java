@@ -2,6 +2,7 @@ package com.example.json26112019;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,15 +13,27 @@ import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
+    String mURL = "https://khoapham.vn/KhoaPhamTraining/json/tien/demo1.json";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String url = "https://news.zing.vn/";
-        String value = docNoiDung_Tu_URL(url);
-        Log.d("BBB",value);
+        new XulydulieuJson().execute(mURL);
     }
 
+    class XulydulieuJson extends AsyncTask<String,Void,String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return docNoiDung_Tu_URL(strings[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            Log.d("BBB",s);
+        }
+    }
 
     private String docNoiDung_Tu_URL(String theUrl){
         StringBuilder content = new StringBuilder();

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,7 +17,7 @@ import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    String mURL = "https://khoapham.vn/KhoaPhamTraining/json/tien/demo1.json";
+    String mURL = "https://khoapham.vn/KhoaPhamTraining/json/tien/demo2.json";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +37,12 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
-                String website = jsonObject.getString("website");
-                Log.d("BBB",website);
+                JSONArray jsonArrayDanhsach = jsonObject.getJSONArray("danhsach");
+                for (int i = 0 ; i < jsonArrayDanhsach.length() ; i++){
+                    JSONObject jsonObjectKhoahoc = jsonArrayDanhsach.getJSONObject(i);
+                    String khoahoc = jsonObjectKhoahoc.getString("khoahoc");
+                    Log.d("BBB",khoahoc);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
